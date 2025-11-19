@@ -1313,7 +1313,7 @@ GNND<Data_t, Index_t>::GNND(raft::resources const& res, const BuildConfig& build
   static_assert(NUM_SAMPLES <= 32);
 
   using input_t = typename std::remove_const<Data_t>::type;
-  if (ndim_ <= 16 && std::is_same_v<input_t, float>) {
+  if (build_config.fp32_dist_computation && std::is_same_v<input_t, float>) {
     // use fp32 distance computation for better precision with smaller dimension
     d_data_float_.emplace(
       raft::make_device_matrix<float, size_t, raft::row_major>(res, nrow_, ndim_));
